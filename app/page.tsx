@@ -40,8 +40,8 @@ export default function Home() {
 
         <div className="relative z-20 text-center px-4 w-full max-w-5xl mx-auto flex flex-col items-center">
           <motion.p 
-            initial={{ opacity: 0, tracking: '0em' }}
-            animate={{ opacity: 1, tracking: '0.2em' }}
+            initial={{ opacity: 0, letterSpacing: '0em' }}
+            animate={{ opacity: 1, letterSpacing: '0.2em' }}
             transition={{ duration: 1.5, delay: 0.2 }}
             className="text-gold/90 uppercase text-sm md:text-md tracking-[0.2em] mb-6 font-semibold"
           >
