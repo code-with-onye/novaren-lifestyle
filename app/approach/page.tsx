@@ -33,24 +33,31 @@ export default function Approach() {
                 title: "Intentional Network Building",
                 desc: "We engage directly with the pulse of the city. By strategically representing Novaren at premier events and within elite professional circles, we curate a powerful network that translates into unrivaled access and bespoke opportunities for our clients."
               }
-            ].map((step, idx) => (
-              <FadeIn key={idx} delay={idx * 0.2}>
-                <div className="mb-8 overflow-hidden rounded-sm h-48 md:h-64">
-                   <img 
-                      src={`https://images.unsplash.com/photo-${idx === 0 ? '1600607688969-a5bfcd6e4ebd' : idx === 1 ? '1414235077428-971ef9f2e7f8' : '1505362958293-f11186e8a002'}?auto=format&fit=crop&q=80`} 
-                      className="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
-                      alt={step.title}
-                   />
-                </div>
-                <div className="flex items-start gap-6">
-                   <div className="text-gold font-serif text-2xl">0{idx + 1}</div>
-                   <div>
-                      <h3 className="text-2xl font-serif mb-4 text-sand">{step.title}</h3>
-                      <p className="text-sand/70 font-light leading-relaxed">{step.desc}</p>
-                   </div>
-                </div>
-              </FadeIn>
-            ))}
+            ].map((step, idx) => {
+              const IMAGES = [
+                "1600585154340-be6161a56a0c", // 1. Modern luxury architectural villa (Vendor Vetting)
+                "1578474846511-04ba529f0b88", // 2. Premium moody fine dining (Experience-First Doctrine)
+                "1527529482837-4698179dc6ce"  // 3. High-society toast / networking event (Intentional Network Building)
+              ];
+              return (
+                <FadeIn key={idx} delay={idx * 0.2}>
+                  <div className="mb-8 overflow-hidden rounded-sm h-48 md:h-64">
+                     <img 
+                        src={`https://images.unsplash.com/photo-${IMAGES[idx]}?auto=format&fit=crop&q=80`} 
+                        className="w-full h-full object-cover grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-700"
+                        alt={step.title}
+                     />
+                  </div>
+                  <div className="flex items-start gap-6">
+                     <div className="text-gold font-serif text-2xl">0{idx + 1}</div>
+                     <div>
+                        <h3 className="text-2xl font-serif mb-4 text-sand">{step.title}</h3>
+                        <p className="text-sand/70 font-light leading-relaxed">{step.desc}</p>
+                     </div>
+                  </div>
+                </FadeIn>
+              );
+            })}
           </div>
         </section>
         

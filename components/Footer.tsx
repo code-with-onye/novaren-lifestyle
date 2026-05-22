@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, Camera, Mail } from 'lucide-react';
+import { ArrowRight, Mail } from 'lucide-react';
 import { FadeIn } from './FadeIn';
 import Link from 'next/link';
 
@@ -23,19 +23,29 @@ export default function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 mt-32 pt-12 border-t border-sand/20 flex flex-col md:flex-row justify-between items-center gap-6">
-        <div className="font-serif text-2xl uppercase tracking-widest">Novaren</div>
+        <Link href="/" className="hover:opacity-90 transition-opacity">
+          <img 
+            src="/logo-dark.png" 
+            alt="Novaren Lifestyle" 
+            className="h-12 w-auto object-contain" 
+          />
+        </Link>
         
         <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 space-x-0 md:space-x-6 text-sm text-sand/60 uppercase tracking-widest items-center">
           <span className="hover:text-gold transition-colors">Abuja, Nigeria</span>
-          <span className="hover:text-gold transition-colors">info@novaren.com</span>
-          <span className="hover:text-gold transition-colors">+234 XX XXX XXXX</span>
+          <a href="mailto:novarenlifestyle@yahoo.com" className="hover:text-gold transition-colors">novarenlifestyle@yahoo.com</a>
+          <a href="https://wa.me/2348036768678" target="_blank" rel="noopener noreferrer" className="hover:text-gold transition-colors">+234 803 676 8678</a>
         </div>
 
         <div className="flex space-x-4">
-          <a href="#" className="w-10 h-10 rounded-full border border-sand/20 flex flex-col items-center justify-center hover:bg-sand hover:text-forest transition-all">
-            <Camera size={18} />
+          <a href="https://instagram.com/novarenlifestyle" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-sand/20 flex flex-col items-center justify-center hover:bg-sand hover:text-forest transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+            </svg>
           </a>
-          <a href="#" className="w-10 h-10 rounded-full border border-sand/20 flex flex-col items-center justify-center hover:bg-sand hover:text-forest transition-all">
+          <a href="mailto:novarenlifestyle@yahoo.com" className="w-10 h-10 rounded-full border border-sand/20 flex flex-col items-center justify-center hover:bg-sand hover:text-forest transition-all">
             <Mail size={18} />
           </a>
         </div>

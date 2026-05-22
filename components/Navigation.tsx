@@ -12,6 +12,7 @@ export default function Navigation() {
   const pathname = usePathname();
   
   const isLightBackground = pathname === '/about' || pathname === '/inquire';
+  const logoSrc = (isScrolled || !isLightBackground) ? '/logo-dark.png' : '/logo-light.png';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,8 +31,12 @@ export default function Navigation() {
     <>
       <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled ? 'bg-forest text-sand py-4 shadow-lg' : `bg-transparent py-6 ${isLightBackground ? 'text-forest' : 'text-sand'}`}`}>
         <div className="max-w-7xl mx-auto px-6 md:px-12 flex items-center justify-between">
-          <Link href="/" className="font-serif text-2xl tracking-widest uppercase relative z-50">
-            Novaren
+          <Link href="/" className="relative z-50 flex items-center hover:opacity-90 transition-opacity">
+            <img 
+              src={logoSrc} 
+              alt="Novaren Lifestyle" 
+              className="h-12 md:h-14 w-auto object-contain" 
+            />
           </Link>
           
           <div className="hidden md:flex items-center space-x-12 tracking-widest text-xs uppercase font-medium">
