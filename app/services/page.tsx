@@ -116,6 +116,58 @@ const SERVICES = [
       "https://res.cloudinary.com/dz7c3ar3k/image/upload/v1778516698/IMG_0696_zcf74c.jpg",
     isImage: true,
   },
+  {
+    title: "Novaren Moments",
+    subtitle: "Event Curation and Recommendation",
+    description:
+      "We handle intimate small event experiences room decoration for honeymoons, birthdays, Valentine’s, Christmas setups, and special occasions. We also source the right vendors and planners to bring a client’s event vision to life from start to finish. Additionally we recommend existing events in Abuja that are worth our clients’ time and attendance.",
+    features: [
+      "Intimate small event experiences & room decoration",
+      "Vendor & planner sourcing",
+      "Abuja event recommendations"
+    ],
+    image: "/services/novaren_moments.png",
+    isImage: true,
+  },
+  {
+    title: "Brand Partnership Programme",
+    subtitle: "Curated Lifestyle Partnerships",
+    description:
+      "We partner with premium restaurants, spas, hotels, and lifestyle brands in Abuja. They pay to be on our recommended list and we create experience content at their establishments giving our clients trusted recommendations and giving brands warm referrals from exactly the right audience.",
+    features: [
+      "Premium brand partnerships",
+      "Experience content creation",
+      "Trusted client recommendations"
+    ],
+    image: "/services/brand_partnerships.png",
+    isImage: true,
+  },
+  {
+    title: "Gifting & Procurement",
+    subtitle: "Bespoke Luxury Sourcing",
+    description:
+      "We source and curate luxury gifts, flowers, hampers, souvenirs, and bespoke gift packages for any occasion. Whether it is a corporate gift order, a birthday surprise, or party shopping and sourcing, we handle the entire procurement process so our clients never have to step into a market or spend time searching. Every gift sourced through Novaren reflects the same standard of taste and care we bring to everything else.",
+    features: [
+      "Luxury gifts & bespoke packages",
+      "Corporate & personal occasion sourcing",
+      "End-to-end procurement process"
+    ],
+    image: "/services/gifting_procurement.png",
+    isImage: true,
+  },
+  {
+    title: "Curated Travel Experiences",
+    subtitle: "Seamless Travel & Getaways",
+    description:
+      "Nigeria trips(for now), weekend getaways, and curated itineraries beyond Abuja. We plan, vet, and book the full experience so clients travel with zero stress and complete confidence.",
+    features: [
+      "Weekend getaways & Nigeria trips",
+      "Curated itineraries",
+      "End-to-end planning & booking"
+    ],
+    image: "/services/curated_travel.png",
+    isImage: true,
+  },
 ];
 
 export default function Services() {
