@@ -11,7 +11,7 @@ export default function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   
-  const isLightBackground = pathname === '/about' || pathname === '/inquire';
+  const isLightBackground = pathname === '/about' || pathname === '/inquire' || pathname.startsWith('/journal');
   const logoSrc = (isScrolled || !isLightBackground) ? '/logo-dark.png' : '/logo-light.png';
 
   useEffect(() => {
@@ -43,6 +43,7 @@ export default function Navigation() {
             <Link href="/about" className="hover:text-gold transition-colors">Who We Are</Link>
             <Link href="/services" className="hover:text-gold transition-colors">Services</Link>
             <Link href="/approach" className="hover:text-gold transition-colors">How We Work</Link>
+            <Link href="/journal" className="hover:text-gold transition-colors">Journal</Link>
             <Link href="/inquire" className="border border-current px-6 py-2 rounded-full hover:bg-forest hover:text-sand transition-colors">Inquire</Link>
           </div>
 
@@ -64,6 +65,7 @@ export default function Navigation() {
         <Link href="/about" onClick={() => setIsMobileMenuOpen(false)}>Who We Are</Link>
         <Link href="/services" onClick={() => setIsMobileMenuOpen(false)}>Services</Link>
         <Link href="/approach" onClick={() => setIsMobileMenuOpen(false)}>How We Work</Link>
+        <Link href="/journal" onClick={() => setIsMobileMenuOpen(false)}>Journal</Link>
         <Link href="/inquire" onClick={() => setIsMobileMenuOpen(false)}>Inquire</Link>
       </motion.div>
     </>

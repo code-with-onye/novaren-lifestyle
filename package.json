@@ -14,7 +14,13 @@
     "motion": "^12.38.0",
     "next": "16.2.3",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "payload": "latest",
+    "@payloadcms/next": "latest",
+    "@payloadcms/richtext-lexical": "latest",
+    "@payloadcms/db-sqlite": "latest",
+    "graphql": "^16.8.1",
+    "sharp": "0.33.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
