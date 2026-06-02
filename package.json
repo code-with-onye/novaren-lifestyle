@@ -10,17 +10,19 @@
   },
   "dependencies": {
     "@google/genai": "^2.0.1",
+    "@payloadcms/db-sqlite": "latest",
+    "@payloadcms/next": "latest",
+    "@payloadcms/plugin-cloud-storage": "3.85.0",
+    "@payloadcms/richtext-lexical": "latest",
+    "cloudinary": "^2.10.0",
+    "graphql": "^16.8.1",
     "lucide-react": "^1.14.0",
     "motion": "^12.38.0",
     "next": "16.2.3",
+    "payload": "latest",
     "react": "19.2.4",
     "react-dom": "19.2.4",
-    "payload": "latest",
-    "@payloadcms/next": "latest",
-    "@payloadcms/richtext-lexical": "latest",
-    "@payloadcms/db-sqlite": "latest",
-    "graphql": "^16.8.1",
-    "sharp": "0.33.2"
+    "sharp": "0.34.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
