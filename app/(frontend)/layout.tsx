@@ -4,10 +4,67 @@ import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import WelcomeLoader from "@/components/WelcomeLoader";
+import JsonLd from "@/components/JsonLd";
+import {
+  SITE_URL,
+  SITE_NAME,
+  SITE_TAGLINE,
+  SITE_DESCRIPTION,
+  KEYWORDS,
+  OG_IMAGE,
+  organizationJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo";
 
 export const metadata: Metadata = {
-  title: "Novaren Lifestyle | Premium Concierge Abuja",
-  description: "The gateway to luxury in Abuja. Premium lifestyle concierge, private residences, and prestige rentals.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: KEYWORDS,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  category: "Luxury Lifestyle & Concierge",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_NG",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${SITE_NAME} | ${SITE_TAGLINE}`,
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE.url],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  formatDetection: {
+    telephone: true,
+  },
+};
+
+export const viewport = {
+  themeColor: "#112A1B",
 };
 
 function WhatsAppIcon({ className }: { className?: string }) {
@@ -31,6 +88,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="bg-sand text-forest min-h-screen selection:bg-forest selection:text-sand relative font-sans">
+        <JsonLd data={[organizationJsonLd(), websiteJsonLd()]} />
         <WelcomeLoader />
         <Navigation />
         <main>

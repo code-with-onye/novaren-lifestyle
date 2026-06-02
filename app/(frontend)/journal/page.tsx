@@ -1,17 +1,62 @@
 import { getJournalPosts } from '@/lib/journal';
 import Link from 'next/link';
 import { FadeIn } from '@/components/FadeIn';
+import type { Metadata } from 'next';
+import JsonLd from '@/components/JsonLd';
+import {
+  SITE_NAME,
+  SITE_URL,
+  absoluteUrl,
+  breadcrumbJsonLd,
+} from '@/lib/seo';
 
-export const metadata = {
-  title: 'Journal | Novaren Lifestyle',
-  description: 'Editorial insights, luxury real estate trends, and the lifestyle of the global Nigerian.',
+const description =
+  'Editorial insights on luxury living, premier real estate trends, and navigating Abuja with uncompromising style — the lifestyle of the global Nigerian.';
+
+export const metadata: Metadata = {
+  title: 'Journal',
+  description,
+  alternates: { canonical: '/journal' },
+  openGraph: {
+    title: 'Journal',
+    description,
+    url: '/journal',
+    type: 'website',
+  },
+  twitter: { title: 'Journal', description },
 };
 
 export default async function JournalPage() {
   const posts = await getJournalPosts();
 
+  const blogJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: `${SITE_NAME} Journal`,
+    description,
+    url: absoluteUrl('/journal'),
+    publisher: { '@id': `${SITE_URL}/#organization` },
+    blogPost: posts.slice(0, 20).map((post) => ({
+      '@type': 'BlogPosting',
+      headline: post.title,
+      description: post.excerpt,
+      datePublished: post.publishedAt,
+      url: absoluteUrl(`/journal/${post.slug}`),
+      ...(post.coverImage ? { image: [post.coverImage] } : {}),
+    })),
+  };
+
   return (
     <div className="min-h-screen pt-32 pb-24 px-6 md:px-12 bg-sand text-forest">
+      <JsonLd
+        data={[
+          blogJsonLd,
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Journal', path: '/journal' },
+          ]),
+        ]}
+      />
       <div className="max-w-7xl mx-auto">
         <FadeIn>
           <header className="mb-20 md:mb-32 max-w-3xl">

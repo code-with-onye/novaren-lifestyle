@@ -4,6 +4,15 @@ import { FadeIn } from '@/components/FadeIn';
 import Link from 'next/link';
 import { ChevronLeft } from 'lucide-react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
+import type { Metadata } from 'next';
+import JsonLd from '@/components/JsonLd';
+import {
+  SITE_NAME,
+  SITE_URL,
+  OG_IMAGE,
+  absoluteUrl,
+  breadcrumbJsonLd,
+} from '@/lib/seo';
 
 export async function generateStaticParams() {
   const posts = await getJournalPosts();
@@ -12,14 +21,35 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
   const post = await getJournalPostBySlug(resolvedParams.slug);
-  if (!post) return { title: 'Post Not Found | Novaren Lifestyle' };
+  if (!post) return { title: { absolute: 'Post Not Found | Novaren Lifestyle' } };
+
+  const url = `/journal/${post.slug}`;
+  const image = post.coverImage || OG_IMAGE.url;
 
   return {
-    title: `${post.title} | Novaren Lifestyle`,
+    title: post.title,
     description: post.excerpt,
+    alternates: { canonical: url },
+    openGraph: {
+      type: 'article',
+      url,
+      title: post.title,
+      description: post.excerpt,
+      siteName: SITE_NAME,
+      publishedTime: post.publishedAt,
+      authors: post.author?.name ? [post.author.name] : undefined,
+      section: post.category,
+      images: [{ url: image, alt: post.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.excerpt,
+      images: [image],
+    },
   };
 }
 
@@ -31,8 +61,38 @@ export default async function JournalPostPage({ params }: { params: Promise<{ sl
     notFound();
   }
 
+  const blogPostingJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: post.excerpt,
+    image: post.coverImage ? [post.coverImage] : [OG_IMAGE.url],
+    datePublished: post.publishedAt,
+    dateModified: post.publishedAt,
+    articleSection: post.category,
+    inLanguage: 'en',
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': absoluteUrl(`/journal/${post.slug}`),
+    },
+    author: post.author?.name
+      ? { '@type': 'Person', name: post.author.name, jobTitle: post.author.role }
+      : { '@id': `${SITE_URL}/#organization` },
+    publisher: { '@id': `${SITE_URL}/#organization` },
+  };
+
   return (
     <article className="min-h-screen bg-sand text-forest pb-32">
+      <JsonLd
+        data={[
+          blogPostingJsonLd,
+          breadcrumbJsonLd([
+            { name: 'Home', path: '/' },
+            { name: 'Journal', path: '/journal' },
+            { name: post.title, path: `/journal/${post.slug}` },
+          ]),
+        ]}
+      />
       {/* Hero Image Section */}
       <div className="relative h-[60vh] md:h-[70vh] w-full mt-24">
         <div className="absolute inset-0 bg-black/20 z-10" />
