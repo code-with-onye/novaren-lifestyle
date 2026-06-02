@@ -2,6 +2,7 @@ import { getJournalPostBySlug, getJournalPosts } from '@/lib/journal';
 import { notFound } from 'next/navigation';
 import { FadeIn } from '@/components/FadeIn';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ChevronLeft } from 'lucide-react';
 import { RichText } from '@payloadcms/richtext-lexical/react';
 import type { Metadata } from 'next';
@@ -96,10 +97,13 @@ export default async function JournalPostPage({ params }: { params: Promise<{ sl
       {/* Hero Image Section */}
       <div className="relative h-[60vh] md:h-[70vh] w-full mt-24">
         <div className="absolute inset-0 bg-black/20 z-10" />
-        <img 
-          src={post.coverImage} 
+        <Image
+          src={post.coverImage}
           alt={post.title}
-          className="absolute inset-0 w-full h-full object-cover"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover"
         />
         <div className="absolute bottom-0 left-0 w-full h-1/2 bg-linear-to-t from-sand to-transparent z-10" />
       </div>
@@ -133,11 +137,16 @@ export default async function JournalPostPage({ params }: { params: Promise<{ sl
             </h1>
 
             <div className="flex items-center space-x-4 pb-8 border-b border-forest/10">
-              <img 
-                src={post.author.avatarUrl} 
-                alt={post.author.name}
-                className="w-12 h-12 rounded-full object-cover grayscale"
-              />
+              {post.author?.avatarUrl && (
+                <Image
+                  src={post.author.avatarUrl}
+                  alt={post.author.name}
+                  width={48}
+                  height={48}
+                  unoptimized
+                  className="w-12 h-12 rounded-full object-cover grayscale"
+                />
+              )}
               <div>
                 <p className="font-semibold text-lg">{post.author.name}</p>
                 <p className="text-sm text-forest/60 uppercase tracking-widest">{post.author.role}</p>

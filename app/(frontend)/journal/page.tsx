@@ -1,5 +1,6 @@
 import { getJournalPosts } from '@/lib/journal';
 import Link from 'next/link';
+import Image from 'next/image';
 import { FadeIn } from '@/components/FadeIn';
 import type { Metadata } from 'next';
 import JsonLd from '@/components/JsonLd';
@@ -74,10 +75,12 @@ export default async function JournalPage() {
             <FadeIn key={post.slug} delay={index * 0.15}>
               <Link href={`/journal/${post.slug}`} className="group block">
                 <div className="relative aspect-[4/5] overflow-hidden mb-6 bg-forest/5">
-                  <img
+                  <Image
                     src={post.coverImage}
                     alt={post.title}
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    fill
+                    sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute top-4 left-4 bg-sand px-3 py-1 text-xs font-semibold uppercase tracking-widest text-forest">
                     {post.category}
@@ -104,11 +107,16 @@ export default async function JournalPage() {
                   </p>
                   
                   <div className="flex items-center space-x-3 pt-4 border-t border-forest/10 mt-6">
-                    <img 
-                      src={post.author.avatarUrl} 
-                      alt={post.author.name}
-                      className="w-10 h-10 rounded-full object-cover grayscale"
-                    />
+                    {post.author?.avatarUrl && (
+                      <Image
+                        src={post.author.avatarUrl}
+                        alt={post.author.name}
+                        width={40}
+                        height={40}
+                        unoptimized
+                        className="w-10 h-10 rounded-full object-cover grayscale"
+                      />
+                    )}
                     <div>
                       <p className="text-sm font-semibold">{post.author.name}</p>
                       <p className="text-xs text-forest/60 uppercase tracking-widest">{post.author.role}</p>
