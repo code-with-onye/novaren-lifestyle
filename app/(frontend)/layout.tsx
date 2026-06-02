@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
@@ -52,6 +53,13 @@ export default function RootLayout({
             Message Us
           </span>
         </a>
+
+        {/* Umami Analytics */}
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="4b1c4089-0ea1-4ae6-87f7-96b65cf6de6d"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
