@@ -44,7 +44,17 @@ export default buildConfig({
   },
   db: sqliteAdapter({
     client: {
-      url: process.env.DATABASE_URI || 'file:./payload.db',
+      // Use Turso's stateless HTTP transport (https://) rather than the
+      // persistent libSQL websocket (libsql://). The websocket's Hrana stream
+      // expires when idle and isn't transparently re-established, which surfaced
+      // as intermittent "Failed query: ..." errors in the long-running dev
+      // server (every query — schema introspection, auth, journal — would
+      // randomly fail while a fresh connection always worked). HTTP issues one
+      // independent request per query, so there's no stream to go stale.
+      url: (process.env.DATABASE_URI || 'file:./payload.db').replace(
+        /^libsql:\/\//,
+        'https://',
+      ),
       // Required for remote libSQL/Turso (ignored for local file: URLs)
       authToken: process.env.DATABASE_AUTH_TOKEN,
     },
