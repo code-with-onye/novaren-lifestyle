@@ -7,6 +7,17 @@ export type JournalAuthor = {
   avatarUrl: string;
 };
 
+// Payload nests the avatar upload inside the author group. When populated it is
+// a Media object; flatten it to a plain URL so the frontend can render it directly.
+function mapAuthor(author: any): JournalAuthor {
+  return {
+    name: author?.name ?? '',
+    role: author?.role ?? '',
+    avatarUrl:
+      typeof author?.avatar === 'object' && author.avatar?.url ? author.avatar.url : '',
+  };
+}
+
 export type JournalPost = {
   slug: string;
   title: string;
@@ -33,7 +44,7 @@ export async function getJournalPosts(): Promise<JournalPost[]> {
     content: doc.content,
     coverImage: typeof doc.coverImage === 'object' && doc.coverImage?.url ? doc.coverImage.url : '',
     category: doc.category,
-    author: doc.author,
+    author: mapAuthor(doc.author),
     publishedAt: doc.publishedAt,
   }));
 }
@@ -61,7 +72,7 @@ export async function getJournalPostBySlug(slug: string): Promise<JournalPost | 
     content: doc.content,
     coverImage: typeof doc.coverImage === 'object' && doc.coverImage?.url ? doc.coverImage.url : '',
     category: doc.category,
-    author: doc.author,
+    author: mapAuthor(doc.author),
     publishedAt: doc.publishedAt,
   };
 }

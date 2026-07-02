@@ -86,8 +86,9 @@ export const JournalPosts: CollectionConfig = {
           type: 'text',
         },
         {
-          name: 'avatarUrl',
-          type: 'text', // A URL or can use an upload field later
+          name: 'avatar',
+          type: 'upload',
+          relationTo: 'media',
         },
       ],
     },
