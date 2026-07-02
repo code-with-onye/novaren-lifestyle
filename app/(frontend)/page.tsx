@@ -11,29 +11,30 @@ export default function Home() {
   const { scrollY } = useScroll();
   const heroY = useTransform(scrollY, [0, 1000], [0, 400]);
   const heroOpacity = useTransform(scrollY, [0, 600], [1, 0]);
+  const heroScale = useTransform(scrollY, [0, 800], [1.05, 1.15]);
 
   return (
     <>
       <section ref={heroRef} className="relative h-screen flex items-center justify-center overflow-hidden bg-forest">
-        <motion.div 
-          style={{ y: heroY, opacity: heroOpacity }}
-          className="absolute inset-0 w-full h-full overflow-hidden"
+        <motion.div
+          style={{ y: heroY, opacity: heroOpacity, willChange: 'transform, opacity' }}
+          className="absolute inset-0 w-full h-full overflow-hidden transform-gpu"
         >
           <div className="absolute inset-0 bg-black/60 z-10" />
           <motion.div
-             style={{ scale: useTransform(scrollY, [0, 800], [1.05, 1.15]) }}
-             className="w-full h-full"
+             style={{ scale: heroScale, willChange: 'transform' }}
+             className="w-full h-full transform-gpu"
           >
-            <video 
-              autoPlay 
-              loop 
-              muted 
+            <video
+              autoPlay
+              loop
+              muted
               playsInline
               className="w-full h-full object-cover"
-              poster="https://res.cloudinary.com/dz7c3ar3k/video/upload/so_0/Say_hello_to_our_brand_new_3-bedroom_luxury_apartment_now_with_your_own_private_cinema_in_Wuye_A_exi2rw.jpg"
+              poster="https://res.cloudinary.com/dz7c3ar3k/video/upload/so_0,q_auto,f_auto,w_1920/Say_hello_to_our_brand_new_3-bedroom_luxury_apartment_now_with_your_own_private_cinema_in_Wuye_A_exi2rw.jpg"
             >
-              <source src="https://res.cloudinary.com/dz7c3ar3k/video/upload/Say_hello_to_our_brand_new_3-bedroom_luxury_apartment_now_with_your_own_private_cinema_in_Wuye_A_exi2rw.mp4" type="video/mp4" />
-              <source src="https://res.cloudinary.com/dz7c3ar3k/video/upload/Say_hello_to_our_brand_new_3-bedroom_luxury_apartment_now_with_your_own_private_cinema_in_Wuye_A_exi2rw.webm" type="video/webm" />
+              <source src="https://res.cloudinary.com/dz7c3ar3k/video/upload/q_auto,w_1920/Say_hello_to_our_brand_new_3-bedroom_luxury_apartment_now_with_your_own_private_cinema_in_Wuye_A_exi2rw.mp4" type="video/mp4" />
+              <source src="https://res.cloudinary.com/dz7c3ar3k/video/upload/q_auto,w_1920/Say_hello_to_our_brand_new_3-bedroom_luxury_apartment_now_with_your_own_private_cinema_in_Wuye_A_exi2rw.webm" type="video/webm" />
             </video>
           </motion.div>
         </motion.div>
