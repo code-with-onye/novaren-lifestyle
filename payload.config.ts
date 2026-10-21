@@ -12,6 +12,11 @@ import { Users } from './collections/Users';
 import { Media } from './collections/Media';
 import { JournalPosts } from './collections/JournalPosts';
 import { Inquiries } from './collections/Inquiries';
+import { Events } from './collections/Events';
+import { Rates } from './collections/Rates';
+import { Packages } from './collections/Packages';
+import { Vehicles } from './collections/Vehicles';
+import { Services } from './collections/Services';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -23,7 +28,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, JournalPosts, Inquiries],
+  collections: [Users, Media, JournalPosts, Events, Rates, Packages, Vehicles, Services, Inquiries],
   editor: lexicalEditor(),
   sharp,
   plugins: [

@@ -1,31 +1,25 @@
-import { getJournalPostBySlug, getJournalPosts } from '@/lib/journal';
-import { notFound } from 'next/navigation';
-import { FadeIn } from '@/components/FadeIn';
-import Link from 'next/link';
-import Image from 'next/image';
-import { ChevronLeft } from 'lucide-react';
-import { RichText } from '@payloadcms/richtext-lexical/react';
-import type { Metadata } from 'next';
-import JsonLd from '@/components/JsonLd';
-import {
-  SITE_NAME,
-  SITE_URL,
-  OG_IMAGE,
-  absoluteUrl,
-  breadcrumbJsonLd,
-} from '@/lib/seo';
+import type { Metadata } from "next";
+import Link from "next/link";
+import Image from "next/image";
+import { notFound } from "next/navigation";
+import { RichText } from "@payloadcms/richtext-lexical/react";
+import { FadeIn } from "@/components/FadeIn";
+import JsonLd from "@/components/JsonLd";
+import { getJournalPostBySlug, getJournalPosts } from "@/lib/journal";
+import { SITE_NAME, SITE_URL, OG_IMAGE, absoluteUrl, breadcrumbJsonLd } from "@/lib/seo";
+import { formatPostDate, readingMinutes } from "../format";
+
+type Props = { params: Promise<{ slug: string }> };
 
 export async function generateStaticParams() {
   const posts = await getJournalPosts();
-  return posts.map((post) => ({
-    slug: post.slug,
-  }));
+  return posts.map((post) => ({ slug: post.slug }));
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const resolvedParams = await params;
-  const post = await getJournalPostBySlug(resolvedParams.slug);
-  if (!post) return { title: { absolute: 'Post Not Found | Novaren Lifestyle' } };
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getJournalPostBySlug(slug);
+  if (!post) return { title: { absolute: `Post Not Found | ${SITE_NAME}` } };
 
   const url = `/journal/${post.slug}`;
   const image = post.coverImage || OG_IMAGE.url;
@@ -35,7 +29,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     description: post.excerpt,
     alternates: { canonical: url },
     openGraph: {
-      type: 'article',
+      type: "article",
       url,
       title: post.title,
       description: post.excerpt,
@@ -46,7 +40,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       images: [{ url: image, alt: post.title }],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: post.title,
       description: post.excerpt,
       images: [image],
@@ -54,113 +48,129 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function JournalPostPage({ params }: { params: Promise<{ slug: string }> }) {
-  const resolvedParams = await params;
-  const post = await getJournalPostBySlug(resolvedParams.slug);
+export default async function JournalPostPage({ params }: Props) {
+  const { slug } = await params;
+  const [post, allPosts] = await Promise.all([getJournalPostBySlug(slug), getJournalPosts()]);
+  if (!post) notFound();
 
-  if (!post) {
-    notFound();
-  }
+  const more = allPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+  const minutes = readingMinutes(post.content);
 
   const blogPostingJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
     headline: post.title,
     description: post.excerpt,
     image: post.coverImage ? [post.coverImage] : [OG_IMAGE.url],
     datePublished: post.publishedAt,
     dateModified: post.publishedAt,
     articleSection: post.category,
-    inLanguage: 'en',
+    inLanguage: "en",
     mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': absoluteUrl(`/journal/${post.slug}`),
+      "@type": "WebPage",
+      "@id": absoluteUrl(`/journal/${post.slug}`),
     },
     author: post.author?.name
-      ? { '@type': 'Person', name: post.author.name, jobTitle: post.author.role }
-      : { '@id': `${SITE_URL}/#organization` },
-    publisher: { '@id': `${SITE_URL}/#organization` },
+      ? { "@type": "Person", name: post.author.name, jobTitle: post.author.role }
+      : { "@id": `${SITE_URL}/#organization` },
+    publisher: { "@id": `${SITE_URL}/#organization` },
   };
 
   return (
-    <article className="min-h-screen bg-sand text-forest pb-32">
+    <article className="post">
       <JsonLd
         data={[
           blogPostingJsonLd,
           breadcrumbJsonLd([
-            { name: 'Home', path: '/' },
-            { name: 'Journal', path: '/journal' },
+            { name: "Home", path: "/" },
+            { name: "Journal", path: "/journal" },
             { name: post.title, path: `/journal/${post.slug}` },
           ]),
         ]}
       />
-      {/* Hero Image Section */}
-      <div className="relative h-[60vh] md:h-[70vh] w-full mt-24">
-        <div className="absolute inset-0 bg-black/20 z-10" />
-        <Image
-          src={post.coverImage}
-          alt={post.title}
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
-        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-linear-to-t from-sand to-transparent z-10" />
-      </div>
 
-      <div className="max-w-4xl mx-auto px-6 md:px-12 -mt-32 relative z-20">
+      <header className="post-header">
         <FadeIn>
-          <div className="mb-12">
-            <Link 
-              href="/journal" 
-              className="inline-flex items-center text-xs font-semibold uppercase tracking-widest text-forest/70 hover:text-gold transition-colors mb-8"
-            >
-              <ChevronLeft className="w-4 h-4 mr-2" />
-              Back to Journal
-            </Link>
-
-            <div className="flex items-center space-x-4 mb-6">
-              <span className="bg-forest text-sand px-3 py-1 text-xs font-semibold uppercase tracking-widest">
-                {post.category}
-              </span>
-              <time className="text-xs font-medium uppercase tracking-widest text-gold" dateTime={post.publishedAt}>
-                {new Date(post.publishedAt).toLocaleDateString('en-US', {
-                  month: 'long',
-                  day: 'numeric',
-                  year: 'numeric'
-                })}
-              </time>
-            </div>
-
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif leading-tight mb-8">
-              {post.title}
-            </h1>
-
-            <div className="flex items-center space-x-4 pb-8 border-b border-forest/10">
-              {post.author?.avatarUrl && (
-                <Image
-                  src={post.author.avatarUrl}
-                  alt={post.author.name}
-                  width={48}
-                  height={48}
-                  unoptimized
-                  className="w-12 h-12 rounded-full object-cover grayscale"
-                />
+          <Link href="/journal" className="post-back">
+            ← Back to the journal
+          </Link>
+          <div className="post-meta">
+            <span>{post.category}</span>
+            {post.publishedAt && <time dateTime={post.publishedAt}>{formatPostDate(post.publishedAt)}</time>}
+            <span>{minutes} min read</span>
+          </div>
+          <h1>{post.title}</h1>
+          <p className="post-dek">{post.excerpt}</p>
+          {post.author?.name && (
+            <div className="post-author">
+              {post.author.avatarUrl ? (
+                <Image src={post.author.avatarUrl} alt="" width={44} height={44} unoptimized />
+              ) : (
+                <span className="post-author-initial" aria-hidden="true">
+                  {post.author.name.charAt(0)}
+                </span>
               )}
               <div>
-                <p className="font-semibold text-lg">{post.author.name}</p>
-                <p className="text-sm text-forest/60 uppercase tracking-widest">{post.author.role}</p>
+                <strong>{post.author.name}</strong>
+                {post.author.role && <small>{post.author.role}</small>}
               </div>
             </div>
-          </div>
+          )}
         </FadeIn>
+      </header>
 
-        <FadeIn delay={0.2}>
-          <div className="prose prose-lg md:prose-xl prose-stone max-w-none prose-headings:font-serif prose-headings:font-normal prose-headings:text-forest prose-p:text-forest/80 prose-p:font-light prose-p:leading-relaxed prose-a:text-gold hover:prose-a:text-forest transition-colors">
-            <RichText data={post.content} />
+      {post.coverImage && (
+        <div className="post-cover">
+          <Image src={post.coverImage} alt={post.title} fill priority sizes="(max-width: 1200px) 100vw, 1200px" />
+        </div>
+      )}
+
+      <FadeIn delay={0.1}>
+        <div className="post-body">
+          {post.content ? <RichText data={post.content} /> : <p>{post.excerpt}</p>}
+        </div>
+      </FadeIn>
+
+      <aside className="post-enquire">
+        <div className="eyebrow">Inspired to visit?</div>
+        <h2>We can arrange the stay, the ride and the reservations.</h2>
+        <div className="actions">
+          <Link className="btn" href="/#concierge">
+            Request a concierge <span className="arrow">↗</span>
+          </Link>
+          <Link className="btn light" href="/journal">
+            More stories
+          </Link>
+        </div>
+      </aside>
+
+      {more.length > 0 && (
+        <section className="section post-more" aria-labelledby="more-heading">
+          <div className="container">
+            <div className="section-head">
+              <div className="eyebrow">Keep reading</div>
+              <h2 id="more-heading">More from the journal</h2>
+            </div>
+            <div className="post-grid">
+              {more.map((p) => (
+                <Link key={p.slug} href={`/journal/${p.slug}`} className="post-card">
+                  <div className="post-card-img">
+                    {p.coverImage && (
+                      <Image src={p.coverImage} alt={p.title} fill sizes="(max-width: 700px) 100vw, 33vw" />
+                    )}
+                  </div>
+                  <div className="post-meta">
+                    <span>{p.category}</span>
+                    {p.publishedAt && <time dateTime={p.publishedAt}>{formatPostDate(p.publishedAt)}</time>}
+                  </div>
+                  <h3>{p.title}</h3>
+                  <p>{p.excerpt}</p>
+                </Link>
+              ))}
+            </div>
           </div>
-        </FadeIn>
-      </div>
+        </section>
+      )}
     </article>
   );
 }
