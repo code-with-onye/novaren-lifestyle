@@ -13,7 +13,7 @@ export const SITE_NAME = "Novaren Lifestyle";
 export const SITE_TAGLINE = "Premium Lifestyle Concierge in Abuja";
 
 export const SITE_DESCRIPTION =
-  "Novaren Lifestyle is Abuja's premier luxury concierge — private residences, prestige car rentals, VIP access, executive corporate solutions, and bespoke lifestyle management for the global Nigerian and the international traveler.";
+  "Novaren Lifestyle is Abuja's premier luxury concierge: private residences, prestige car rentals, VIP access, executive corporate solutions, and bespoke lifestyle management for the global Nigerian and the international traveler.";
 
 export const CONTACT = {
   phone: "+2348036768678",
@@ -37,7 +37,7 @@ export const OG_IMAGE = {
   url: `${SITE_URL}/og-image.jpg`,
   width: 1200,
   height: 630,
-  alt: `${SITE_NAME} — ${SITE_TAGLINE}`,
+  alt: `${SITE_NAME} | ${SITE_TAGLINE}`,
 };
 
 export const KEYWORDS = [
@@ -83,7 +83,7 @@ export function organizationJsonLd() {
     slogan: "The gateway to luxury in Abuja.",
     telephone: CONTACT.phone,
     priceRange: "$$$",
-    // Service-area business — no street address, but a clear served region.
+    // Service-area business: no street address, but a clear served region.
     areaServed: CONTACT.areaServed.map((name) => ({
       "@type": "AdministrativeArea",
       name,

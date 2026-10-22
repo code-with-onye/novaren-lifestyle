@@ -33,7 +33,7 @@ const body = Montserrat({
 
 const title = `${SITE_NAME} | Stays, Wheels & Concierge in Abuja`;
 const description =
-  "Thoughtfully arranged stays, movement and experiences in Abuja. Accommodation, car hire, stay packages, events and personal concierge — coordinated through one point of contact.";
+  "Thoughtfully arranged stays, movement and experiences in Abuja. Accommodation, car hire, stay packages, events and personal concierge, all coordinated through one point of contact.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

@@ -8,7 +8,7 @@ import { SITE_NAME, SITE_URL, absoluteUrl, breadcrumbJsonLd } from "@/lib/seo";
 import { formatPostDate } from "./format";
 
 const description =
-  "Editorial notes on living well in Abuja — stays, movement, dining, culture and the details that make a visit memorable.";
+  "Editorial notes on living well in Abuja: stays, movement, dining, culture and the details that make a visit memorable.";
 
 export const metadata: Metadata = {
   title: "Journal",
@@ -89,7 +89,7 @@ export default async function JournalPage() {
           <div className="eyebrow">The Novaren Journal</div>
           <h1>Notes on living well in Abuja.</h1>
           <p>
-            Stays, movement, dining and culture — considered recommendations and the stories behind
+            Stays, movement, dining and culture. Considered recommendations and the stories behind
             them.
           </p>
         </FadeIn>

@@ -150,7 +150,7 @@ export default async function LifestylePage() {
             </h1>
             <p>
               From a welcoming place to stay to the car that meets you and the experiences that
-              make a trip memorable — Novaren brings the details together.
+              make a trip memorable, Novaren brings the details together.
             </p>
             <div className="actions">
               <a className="btn" href="#services">
@@ -247,7 +247,7 @@ export default async function LifestylePage() {
             ))}
           </div>
           <p className="note">
-            Indicative ranges — final prices are confirmed with your quotation. Supplier
+            Indicative ranges only. Final prices are confirmed with your quotation. Supplier
             availability and terms apply.
           </p>
         </div>

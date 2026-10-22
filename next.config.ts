@@ -9,12 +9,11 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: dirname,
   },
-  // The previous site's standalone pages now live as sections of the homepage.
+  // The previous site's standalone pages now live as sections of the homepage or /about.
   async redirects() {
     return [
       { source: "/lifestyle", destination: "/", permanent: true },
-      { source: "/about", destination: "/", permanent: true },
-      { source: "/approach", destination: "/", permanent: true },
+      { source: "/approach", destination: "/about", permanent: true },
       { source: "/services", destination: "/#services", permanent: true },
       { source: "/inquire", destination: "/#concierge", permanent: true },
     ];

@@ -10,7 +10,7 @@ export default function JsonLd({ data }: { data: object | object[] }) {
         <script
           key={i}
           type="application/ld+json"
-          // Structured data is trusted, build-time content — safe to inline.
+          // Structured data is trusted, build-time content, so it is safe to inline.
           dangerouslySetInnerHTML={{ __html: JSON.stringify(item) }}
         />
       ))}
