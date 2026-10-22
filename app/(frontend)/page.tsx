@@ -38,7 +38,7 @@ const IMG = {
 // Shown until service cards are added in the CMS (Admin → Service cards).
 const FALLBACK_SERVICES = [
   { n: "01 / Stay", title: "Stays", cta: "Explore accommodation", href: "#pricing", img: IMG.living, alt: "Warm neutral living room" },
-  { n: "02 / Move", title: "Wheels", cta: "Find your ride", href: "#wheels", img: IMG.car, alt: "Executive car" },
+  { n: "02 / Move", title: "Fleets", cta: "Find your ride", href: "#wheels", img: IMG.car, alt: "Executive car" },
   { n: "03 / Discover", title: "Access", cta: "Explore experiences", href: "#concierge", img: IMG.dining, alt: "Restaurant dining setting" },
   { n: "04 / Gather", title: "Moments", cta: "See what's happening", href: "#events", img: IMG.event, alt: "Elegant event tables" },
 ];
@@ -173,7 +173,7 @@ export default async function LifestylePage() {
           />
           <div className="image-note">
             <strong>Abuja, made easier.</strong>
-            Stays · Wheels · Access · Moments
+            Stays · Fleets · Access · Moments
           </div>
         </div>
       </section>
@@ -305,7 +305,7 @@ export default async function LifestylePage() {
       <section className="section fleet" id="wheels">
         <div className="container">
           <FadeIn className="section-head">
-            <div className="eyebrow">Wheels, arranged</div>
+            <div className="eyebrow">Fleets, arranged</div>
             <h2>Move through the city with ease.</h2>
             <p>
               Choose the type of ride that suits your plans. Specific vehicles and rates are

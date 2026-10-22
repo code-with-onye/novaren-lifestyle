@@ -69,7 +69,7 @@ export const Services: CollectionConfig = {
           options: [
             { label: 'Indicative rates', value: '#pricing' },
             { label: 'Stay packages', value: '#packages' },
-            { label: 'Wheels', value: '#wheels' },
+            { label: 'Fleets', value: '#wheels' },
             { label: 'Events', value: '#events' },
             { label: 'Concierge form', value: '#concierge' },
             { label: 'FAQs', value: '#faq' },

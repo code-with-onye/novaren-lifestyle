@@ -184,7 +184,7 @@ export default async function AboutPage() {
               Request a concierge <span className="arrow">↗</span>
             </Link>
             <Link className="btn light" href="/journal">
-              Read the journal
+              Read our editorial
             </Link>
           </div>
         </FadeIn>

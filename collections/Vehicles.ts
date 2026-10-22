@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload';
 import { revalidatePath } from 'next/cache';
 
-// The homepage shows these in its "Wheels, arranged" section; bust its cached render on change.
+// The homepage shows these in its "Fleets, arranged" section; bust its cached render on change.
 const revalidateVehicles = () => {
   try {
     revalidatePath('/');
@@ -19,7 +19,7 @@ export const Vehicles: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'priceFrom', 'unit', 'sortOrder', 'published'],
-    description: 'Vehicle types shown in the "Wheels, arranged" section of the homepage.',
+    description: 'Vehicle types shown in the "Fleets, arranged" section of the homepage.',
   },
   defaultSort: 'sortOrder',
   access: {

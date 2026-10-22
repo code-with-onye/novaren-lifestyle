@@ -31,7 +31,7 @@ const body = Montserrat({
   display: "swap",
 });
 
-const title = `${SITE_NAME} | Stays, Wheels & Concierge in Abuja`;
+const title = `${SITE_NAME} | Stays, Fleets & Concierge in Abuja`;
 const description =
   "Thoughtfully arranged stays, movement and experiences in Abuja. Accommodation, car hire, stay packages, events and personal concierge, all coordinated through one point of contact.";
 

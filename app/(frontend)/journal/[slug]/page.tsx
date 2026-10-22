@@ -88,7 +88,7 @@ export default async function JournalPostPage({ params }: Props) {
           blogPostingJsonLd,
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
-            { name: "Journal", path: "/journal" },
+            { name: "Editorial", path: "/journal" },
             { name: post.title, path: `/journal/${post.slug}` },
           ]),
         ]}
@@ -97,7 +97,7 @@ export default async function JournalPostPage({ params }: Props) {
       <header className="post-header">
         <FadeIn>
           <Link href="/journal" className="post-back">
-            ← Back to the journal
+            ← Back to Editorial
           </Link>
           <div className="post-meta">
             <span>{post.category}</span>
@@ -154,7 +154,7 @@ export default async function JournalPostPage({ params }: Props) {
           <div className="container">
             <div className="section-head">
               <div className="eyebrow">Keep reading</div>
-              <h2 id="more-heading">More from the journal</h2>
+              <h2 id="more-heading">More from Editorial</h2>
             </div>
             <div className="post-grid">
               {more.map((p) => (

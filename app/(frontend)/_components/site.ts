@@ -4,9 +4,9 @@ import { CONTACT, SOCIAL } from "@/lib/seo";
 // absolute ("/#…") so they work from other pages too.
 export const NAV_LINKS = [
   { href: "/#pricing", label: "Stays" },
-  { href: "/#wheels", label: "Wheels" },
+  { href: "/#wheels", label: "Fleets" },
   { href: "/#events", label: "Events" },
-  { href: "/journal", label: "Journal" },
+  { href: "/journal", label: "Editorial" },
   { href: "/about", label: "About" },
 ] as const;
 

@@ -14,16 +14,16 @@ const description =
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
-  title: "Journal",
+  title: "Editorial",
   description,
   alternates: { canonical: "/journal" },
   openGraph: {
-    title: "Journal",
+    title: "Editorial",
     description,
     url: "/journal",
     type: "website",
   },
-  twitter: { title: "Journal", description },
+  twitter: { title: "Editorial", description },
 };
 
 function PostMeta({ post }: { post: JournalPost }) {
@@ -61,7 +61,7 @@ export default async function JournalPage() {
   const blogJsonLd = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    name: `${SITE_NAME} Journal`,
+    name: `${SITE_NAME} Editorial`,
     description,
     url: absoluteUrl("/journal"),
     publisher: { "@id": `${SITE_URL}/#organization` },
@@ -82,14 +82,14 @@ export default async function JournalPage() {
           blogJsonLd,
           breadcrumbJsonLd([
             { name: "Home", path: "/" },
-            { name: "Journal", path: "/journal" },
+            { name: "Editorial", path: "/journal" },
           ]),
         ]}
       />
 
       <section className="journal-hero">
         <FadeIn className="section-head">
-          <div className="eyebrow">The Novaren Journal</div>
+          <div className="eyebrow">The Novaren Editorial</div>
           <h1>Notes on living well in Abuja.</h1>
           <p>
             Stays, movement, dining and culture. Considered recommendations and the stories behind

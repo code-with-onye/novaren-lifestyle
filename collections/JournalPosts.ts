@@ -14,6 +14,10 @@ const revalidateJournal = (slug?: string) => {
 
 export const JournalPosts: CollectionConfig = {
   slug: 'journal-posts',
+  labels: {
+    singular: 'Editorial post',
+    plural: 'Editorial',
+  },
   admin: {
     useAsTitle: 'title',
   },

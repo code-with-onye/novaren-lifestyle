@@ -55,9 +55,9 @@ export default function SiteFooter() {
             <div className="footer-links">
               <Link href="/#pricing">Stays</Link>
               <Link href="/#packages">Stay packages</Link>
-              <Link href="/#wheels">Wheels</Link>
+              <Link href="/#wheels">Fleets</Link>
               <Link href="/#events">Events</Link>
-              <Link href="/journal">Journal</Link>
+              <Link href="/journal">Editorial</Link>
               <Link href="/about">About us</Link>
             </div>
           </div>
@@ -93,7 +93,7 @@ export default function SiteFooter() {
           <span>© {new Date().getFullYear()} Novaren Lifestyle. All rights reserved.</span>
           <nav aria-label="Footer">
             <Link href="/about">About</Link>
-            <Link href="/journal">Journal</Link>
+            <Link href="/journal">Editorial</Link>
             <a className="to-top" href="#home">
               Back to top ↑
             </a>
