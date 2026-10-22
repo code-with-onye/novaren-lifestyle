@@ -17,6 +17,7 @@ import { Rates } from './collections/Rates';
 import { Packages } from './collections/Packages';
 import { Vehicles } from './collections/Vehicles';
 import { Services } from './collections/Services';
+import { Principles } from './collections/Principles';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -28,7 +29,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, JournalPosts, Events, Rates, Packages, Vehicles, Services, Inquiries],
+  collections: [Users, Media, JournalPosts, Events, Rates, Packages, Vehicles, Services, Principles, Inquiries],
   editor: lexicalEditor(),
   sharp,
   plugins: [

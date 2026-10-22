@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { InstagramIcon, MailIcon, PhoneIcon, WhatsAppIcon } from "./icons";
 import { CONTACT, EMAIL, SOCIAL } from "./site";
 
@@ -26,10 +27,16 @@ export default function SiteFooter() {
 
         <div className="footer-grid">
           <div className="footer-brand">
-            <Link className="wordmark" href="/">
-              NOVAREN<small>Lifestyle &amp; Concierge</small>
+            <Link className="brand" href="/" aria-label="Novaren Lifestyle home">
+              <Image
+                src="/logo-dark.png"
+                alt="Novaren Lifestyle"
+                width={245}
+                height={221}
+                className="footer-logo"
+              />
             </Link>
-            <p>Thoughtful stays, movement and experiences — arranged around you.</p>
+            <p>Thoughtful stays, movement and experiences, arranged around you.</p>
             <div className="socials">
               <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Novaren on Instagram">
                 <InstagramIcon />
@@ -51,6 +58,7 @@ export default function SiteFooter() {
               <Link href="/#wheels">Wheels</Link>
               <Link href="/#events">Events</Link>
               <Link href="/journal">Journal</Link>
+              <Link href="/about">About us</Link>
             </div>
           </div>
 
@@ -84,8 +92,8 @@ export default function SiteFooter() {
         <div className="copyright">
           <span>© {new Date().getFullYear()} Novaren Lifestyle. All rights reserved.</span>
           <nav aria-label="Footer">
+            <Link href="/about">About</Link>
             <Link href="/journal">Journal</Link>
-            <Link href="/#concierge">Concierge</Link>
             <a className="to-top" href="#home">
               Back to top ↑
             </a>

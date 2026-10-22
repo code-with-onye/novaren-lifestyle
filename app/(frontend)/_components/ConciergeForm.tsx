@@ -48,7 +48,7 @@ export default function ConciergeForm() {
       form.whatsapp && `WhatsApp: ${form.whatsapp}`,
       "Source: /lifestyle concierge form",
     ].filter(Boolean);
-    const message = `${form.details.trim()}\n\n—\n${meta.join("\n")}`;
+    const message = `${form.details.trim()}\n\n---\n${meta.join("\n")}`;
 
     try {
       const res = await fetch("/api/inquiries", {
@@ -159,7 +159,7 @@ export default function ConciergeForm() {
       <div id="concierge-status" role="status" aria-live="polite">
         {status === "success" && (
           <p className="form-status ok">
-            Thank you — your request has been received. Our team will be in touch shortly.
+            Thank you. Your request has been received and our team will be in touch shortly.
           </p>
         )}
         {status === "error" && (

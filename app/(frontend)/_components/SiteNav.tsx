@@ -2,9 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { WhatsAppIcon } from "./icons";
-import { CONTACT, EMAIL, NAV_LINKS } from "./site";
+import { CONTACT, EMAIL, NAV_LINKS, activePageLink } from "./site";
 
 export default function SiteNav() {
   const [scrolled, setScrolled] = useState(false);
@@ -12,7 +12,8 @@ export default function SiteNav() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const active = pathname.startsWith("/journal") ? "/journal" : isHome ? activeSection : null;
+  const pageLink = activePageLink(pathname);
+  const active = pageLink ?? (isHome ? activeSection : null);
   const toggleRef = useRef<HTMLButtonElement>(null);
   const drawerRef = useRef<HTMLDivElement>(null);
 
@@ -78,27 +79,20 @@ export default function SiteNav() {
 
   return (
     <>
-      <div className="topbar">
-        <div className="topbar-inner">
-          <div className="topbar-side left">
-            <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>
-          </div>
-          <p className="topbar-msg" style={{ margin: 0 }}>
-            Thoughtfully arranged stays, movement &amp; experiences in Abuja
-          </p>
-          <div className="topbar-side right">
-            <a href={`mailto:${EMAIL}`}>Email us</a>
-            <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer">
-              WhatsApp
-            </a>
-          </div>
-        </div>
-      </div>
-
       <header className={`nav${scrolled ? " scrolled" : ""}`}>
         <div className="nav-inner">
-          <Link className="wordmark" href="/" aria-label="Novaren Lifestyle — home">
-            NOVAREN<small>Lifestyle &amp; Concierge</small>
+          <Link className="brand" href="/" aria-label="Novaren Lifestyle home">
+            <Image
+              src="/logo-mark.png"
+              alt=""
+              width={203}
+              height={164}
+              priority
+              className="brand-mark"
+            />
+            <span className="brand-name">
+              NOVAREN<small>Lifestyle &amp; Concierge</small>
+            </span>
           </Link>
 
           <nav className="navlinks" aria-label="Primary">
@@ -107,7 +101,7 @@ export default function SiteNav() {
                 key={l.href}
                 href={l.href}
                 className={active === l.href ? "active" : undefined}
-                aria-current={active === l.href ? (l.href === "/journal" ? "page" : "true") : undefined}
+                aria-current={active === l.href ? (l.href === pageLink ? "page" : "true") : undefined}
               >
                 {l.label}
               </Link>
@@ -115,17 +109,8 @@ export default function SiteNav() {
           </nav>
 
           <div className="nav-actions">
-            <a
-              className="icon-btn"
-              href={CONTACT.whatsapp}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Chat with Novaren on WhatsApp"
-            >
-              <WhatsAppIcon />
-            </a>
-            <Link className="btn" href="/#concierge">
-              Make an enquiry <span className="arrow">↗</span>
+            <Link className="btn nav-cta" href="/#concierge">
+              Enquire <span className="arrow">↗</span>
             </Link>
             <button
               ref={toggleRef}

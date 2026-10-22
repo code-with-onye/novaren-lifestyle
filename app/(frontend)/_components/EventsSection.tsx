@@ -39,7 +39,7 @@ function EventRow({ event }: { event: UpcomingEvent }) {
         </span>
         <h4>{event.title}</h4>
         <p>
-          {event.venue} — {event.summary}
+          {event.venue} · {event.summary}
         </p>
         <div className="event-row-foot">
           {event.priceLabel && <span className="price">{event.priceLabel}</span>}
@@ -85,7 +85,7 @@ export default function EventsSection({ events }: { events: UpcomingEvent[] }) {
           <div className="eyebrow">The city, on your calendar</div>
           <h2>Good plans start here.</h2>
           <p>
-            Discover selected happenings around Abuja — from intimate gatherings and dining
+            Discover selected happenings around Abuja, from intimate gatherings and dining
             experiences to live shows, culture and conversations worth stepping out for.
           </p>
 
@@ -99,7 +99,7 @@ export default function EventsSection({ events }: { events: UpcomingEvent[] }) {
             <ul className="event-list">
               <li className="event-item">
                 <div className="datebox">
-                  <b>—</b>
+                  <b>…</b>
                   <small>SOON</small>
                 </div>
                 <div className="event-info">
