@@ -4,6 +4,7 @@ import { FadeIn } from "@/components/FadeIn";
 import ConciergeForm from "./_components/ConciergeForm";
 import EnquireButton from "./_components/EnquireButton";
 import EventsSection from "./_components/EventsSection";
+import PromoModal, { PromoTrigger } from "./_components/PromoModal";
 import { CONTACT, type RequestType } from "./_components/site";
 import { getUpcomingEvents } from "@/lib/events";
 import { getRates, type Rate } from "@/lib/rates";
@@ -263,6 +264,7 @@ export default async function LifestylePage() {
               Accommodation, transportation and personal assistance coordinated through one point
               of contact. December packages are being curated.
             </p>
+            {cmsPackages.length > 0 && <PromoTrigger />}
           </FadeIn>
           <div className="package-grid">
             {packages.map((p, i) => (
@@ -403,6 +405,16 @@ export default async function LifestylePage() {
           </div>
         </FadeIn>
       </section>
+      {cmsPackages.length > 0 && (
+        <PromoModal
+          packages={cmsPackages.map((p) => ({
+            id: p.id,
+            title: p.title,
+            priceLabel: p.priceLabel,
+            featuredLabel: p.featuredLabel,
+          }))}
+        />
+      )}
     </>
   );
 }

@@ -36,5 +36,6 @@ export const REQUEST_TYPES = [
 export type RequestType = (typeof REQUEST_TYPES)[number]["label"];
 
 export const ENQUIRE_EVENT = "novaren:enquire";
+export const PROMO_OPEN_EVENT = "novaren:promo-open";
 
 export type EnquireDetail = { item: string; type: RequestType };
