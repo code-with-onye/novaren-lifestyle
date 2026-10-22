@@ -5,14 +5,19 @@ import { notFound } from "next/navigation";
 import { RichText } from "@payloadcms/richtext-lexical/react";
 import { FadeIn } from "@/components/FadeIn";
 import JsonLd from "@/components/JsonLd";
-import { getJournalPostBySlug, getJournalPosts } from "@/lib/journal";
+import { getJournalPostBySlug, getJournalPostsSafe } from "@/lib/journal";
 import { SITE_NAME, SITE_URL, OG_IMAGE, absoluteUrl, breadcrumbJsonLd } from "@/lib/seo";
 import { formatPostDate, readingMinutes } from "../format";
 
 type Props = { params: Promise<{ slug: string }> };
 
+// Re-render hourly as a safety net; editing a post in the CMS also revalidates immediately.
+export const revalidate = 3600;
+
+// If the CMS is unreachable at build time this returns no paths, and posts are
+// rendered on their first request instead of failing the build.
 export async function generateStaticParams() {
-  const posts = await getJournalPosts();
+  const posts = await getJournalPostsSafe();
   return posts.map((post) => ({ slug: post.slug }));
 }
 
@@ -50,7 +55,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function JournalPostPage({ params }: Props) {
   const { slug } = await params;
-  const [post, allPosts] = await Promise.all([getJournalPostBySlug(slug), getJournalPosts()]);
+  const [post, allPosts] = await Promise.all([getJournalPostBySlug(slug), getJournalPostsSafe()]);
   if (!post) notFound();
 
   const more = allPosts.filter((p) => p.slug !== post.slug).slice(0, 3);

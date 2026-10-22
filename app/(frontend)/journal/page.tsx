@@ -3,12 +3,15 @@ import Link from "next/link";
 import Image from "next/image";
 import { FadeIn } from "@/components/FadeIn";
 import JsonLd from "@/components/JsonLd";
-import { getJournalPosts, type JournalPost } from "@/lib/journal";
+import { getJournalPostsSafe, type JournalPost } from "@/lib/journal";
 import { SITE_NAME, SITE_URL, absoluteUrl, breadcrumbJsonLd } from "@/lib/seo";
 import { formatPostDate } from "./format";
 
 const description =
   "Editorial notes on living well in Abuja: stays, movement, dining, culture and the details that make a visit memorable.";
+
+// Re-render hourly as a safety net; editing a post in the CMS also revalidates immediately.
+export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Journal",
@@ -52,7 +55,7 @@ function Author({ post }: { post: JournalPost }) {
 }
 
 export default async function JournalPage() {
-  const posts = await getJournalPosts();
+  const posts = await getJournalPostsSafe();
   const [featured, ...rest] = posts;
 
   const blogJsonLd = {
