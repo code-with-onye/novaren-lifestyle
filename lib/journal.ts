@@ -49,6 +49,20 @@ export async function getJournalPosts(): Promise<JournalPost[]> {
   }));
 }
 
+/**
+ * Like getJournalPosts, but returns an empty list instead of throwing when the
+ * CMS is unreachable, so a database hiccup during `next build` can't fail the
+ * build. Pages using it revalidate, so they recover once the database is back.
+ */
+export async function getJournalPostsSafe(): Promise<JournalPost[]> {
+  try {
+    return await getJournalPosts();
+  } catch (error) {
+    console.error('Failed to load journal posts', error);
+    return [];
+  }
+}
+
 export async function getJournalPostBySlug(slug: string): Promise<JournalPost | null> {
   const payload = await getPayload({ config: configPromise });
   const posts = await payload.find({

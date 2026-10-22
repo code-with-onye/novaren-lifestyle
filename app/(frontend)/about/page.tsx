@@ -9,6 +9,9 @@ import { getPrinciples, type Principle } from "@/lib/principles";
 const description =
   "The story behind Novaren Lifestyle: an Abuja concierge built on firsthand experience, carefully vetted partners and a trusted local network.";
 
+// Re-render hourly as a safety net; editing a card in the CMS also revalidates immediately.
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "About",
   description,
