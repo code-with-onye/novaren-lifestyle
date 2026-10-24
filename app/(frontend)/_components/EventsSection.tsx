@@ -109,7 +109,7 @@ export default function EventsSection({ events }: { events: UpcomingEvent[] }) {
               </li>
               <li className="event-item">
                 <div className="datebox">
-                  <b>✦</b>
+                  <Image src="/logo-mark.png" alt="" width={203} height={164} className="datebox-mark" />
                   <small>CURATED</small>
                 </div>
                 <div className="event-info">

@@ -519,10 +519,19 @@ body.nv.nv-locked {
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
-.truststrip span::before {
-  content: "✦";
-  color: var(--gold);
-  margin-right: 10px;
+.truststrip span {
+  position: relative;
+}
+/* Hairline divider centred in the gap between phrases. */
+.truststrip span + span::before {
+  content: "";
+  position: absolute;
+  left: -25px;
+  top: 50%;
+  width: 1px;
+  height: 14px;
+  transform: translateY(-50%);
+  background: #d6ccb6;
 }
 
 /* ---------- Services ---------- */
@@ -709,11 +718,20 @@ body.nv.nv-locked {
   display: grid;
   gap: 6px;
 }
+/* Fine gold check: these are what the package includes. */
+.package li {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
 .package li::before {
-  content: "✦";
-  color: var(--gold);
-  font-size: 9px;
-  margin-right: 9px;
+  content: "";
+  flex-shrink: 0;
+  width: 8px;
+  height: 4px;
+  border-left: 1.5px solid var(--gold);
+  border-bottom: 1.5px solid var(--gold);
+  transform: translateY(-3px) rotate(-45deg);
 }
 .package .price {
   font-size: 16px;
@@ -843,6 +861,12 @@ body.nv.nv-locked {
   font-size: 8px;
   letter-spacing: 0.12em;
 }
+.datebox-mark {
+  display: block;
+  height: 20px;
+  width: auto;
+  margin: 2px auto 6px;
+}
 .event-item h4 {
   margin: 0;
   font-family: var(--serif);
@@ -934,9 +958,13 @@ body.nv.nv-locked {
   font-size: 13px;
 }
 .concierge-list li::before {
-  content: "✦";
-  color: var(--gold);
-  margin-right: 12px;
+  content: "";
+  display: inline-block;
+  width: 16px;
+  height: 1px;
+  background: var(--gold);
+  vertical-align: middle;
+  margin: 0 14px 2px 0;
 }
 .concierge .fine {
   font-size: 11px;
@@ -2213,6 +2241,9 @@ body.nv.nv-locked {
   .truststrip {
     gap: 12px 22px;
     font-size: 9px;
+  }
+  .truststrip span + span::before {
+    display: none;
   }
   .section {
     padding: 68px 6%;
