@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ENQUIRE_EVENT, PROMO_OPEN_EVENT, type EnquireDetail } from "./site";
+import { track } from "@/lib/analytics";
 
 // Hosted on the site's Cloudinary account (video asset novaren/promo/goodnight-abuja).
 // Cloudinary picks the best codec/quality per browser; 540px wide covers the
@@ -51,7 +52,8 @@ export default function PromoModal({ packages }: { packages: PromoPackage[] }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const returnFocus = useRef<HTMLElement | null>(null);
 
-  const show = useCallback(() => {
+  const show = useCallback((source: "automatic" | "watch button") => {
+    track("Promo opened", { source });
     returnFocus.current = document.activeElement as HTMLElement | null;
     setReduceMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
     setMuted(true);
@@ -90,14 +92,14 @@ export default function PromoModal({ packages }: { packages: PromoPackage[] }) {
       const active = document.activeElement;
       const typing = active && ["INPUT", "TEXTAREA", "SELECT"].includes(active.tagName);
       const menuOpen = document.body.classList.contains("nv-locked");
-      if (!typing && !menuOpen) show();
+      if (!typing && !menuOpen) show("automatic");
     }, AUTO_OPEN_DELAY_MS);
     return () => window.clearTimeout(timer);
   }, [show]);
 
   // Manual open via <PromoTrigger />.
   useEffect(() => {
-    const onOpen = () => show();
+    const onOpen = () => show("watch button");
     window.addEventListener(PROMO_OPEN_EVENT, onOpen);
     return () => window.removeEventListener(PROMO_OPEN_EVENT, onOpen);
   }, [show]);

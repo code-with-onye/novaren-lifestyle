@@ -32,6 +32,9 @@ const body = Montserrat({
 });
 
 const title = `${SITE_NAME} | Stays, Fleets & Concierge in Abuja`;
+
+const siteHost = new URL(SITE_URL).hostname.replace(/^www\./, "");
+const TRACKED_DOMAINS = `${siteHost},www.${siteHost}`;
 const description =
   "Thoughtfully arranged stays, movement and experiences in Abuja. Accommodation, car hire, stay packages, events and personal concierge, all coordinated through one point of contact.";
 
@@ -100,6 +103,7 @@ export default function SiteRootLayout({
         <a
           className="wa-float"
           href={CONTACT.whatsapp}
+          data-umami-event="WhatsApp click" data-umami-event-location="floating button"
           target="_blank"
           rel="noopener noreferrer"
           aria-label="Chat with us on WhatsApp"
@@ -109,6 +113,8 @@ export default function SiteRootLayout({
         <Script
           src="https://cloud.umami.is/script.js"
           data-website-id="4b1c4089-0ea1-4ae6-87f7-96b65cf6de6d"
+          // Only count visits on the live site, not localhost or preview deployments.
+          data-domains={TRACKED_DOMAINS}
           strategy="afterInteractive"
         />
       </body>

@@ -430,7 +430,7 @@ export default async function LifestylePage() {
             <a className="btn" href="#concierge">
               Start an enquiry <span className="arrow">↗</span>
             </a>
-            <a className="btn light" href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer">
+            <a className="btn light" href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" data-umami-event="WhatsApp click" data-umami-event-location="homepage closing">
               Chat on WhatsApp
             </a>
           </div>

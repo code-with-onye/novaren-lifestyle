@@ -163,7 +163,7 @@ export default function SiteNav() {
         </Link>
         <div className="drawer-contact">
           <h4>Get in touch</h4>
-          <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer">
+          <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" data-umami-event="WhatsApp click" data-umami-event-location="menu">
             WhatsApp · {CONTACT.phoneDisplay}
           </a>
           <a href={`mailto:${EMAIL}`}>{EMAIL}</a>

@@ -4,9 +4,11 @@ import { useState, useTransition } from "react";
 import { eachNight, formatDate, formatNaira } from "@/lib/dates";
 import { bookStay } from "../actions";
 import RangeCalendar from "./RangeCalendar";
+import { track } from "@/lib/analytics";
 
 type Props = {
   apartmentId: string;
+  apartmentName: string;
   nightlyRate: number;
   cautionDeposit: number;
   minNights: number;
@@ -39,6 +41,7 @@ export default function BookingWidget(props: Props) {
     e.preventDefault();
     if (!range.checkIn || !range.checkOut) return;
     setError(null);
+    track("Booking started", { apartment: props.apartmentName, nights, total });
     startTransition(async () => {
       const res = await bookStay({
         apartmentId: props.apartmentId,

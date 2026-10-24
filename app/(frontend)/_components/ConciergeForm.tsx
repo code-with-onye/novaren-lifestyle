@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ENQUIRE_EVENT, REQUEST_TYPES, type EnquireDetail, type RequestType } from "./site";
+import { track } from "@/lib/analytics";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -63,6 +64,7 @@ export default function ConciergeForm() {
         }),
       });
       if (!res.ok) throw new Error(String(res.status));
+      track("Enquiry sent", { type: form.type });
       setStatus("success");
       setForm(initial);
     } catch {

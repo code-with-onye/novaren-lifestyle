@@ -115,6 +115,7 @@ export default async function StayPage({ params }: Props) {
         <BookingPanel nightlyRate={apartment.nightlyRate} minNights={apartment.minNights}>
           <BookingWidget
             apartmentId={apartment.id}
+            apartmentName={apartment.name}
             nightlyRate={apartment.nightlyRate}
             cautionDeposit={apartment.cautionDeposit}
             minNights={apartment.minNights}

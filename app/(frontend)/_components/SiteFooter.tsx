@@ -13,7 +13,7 @@ export default function SiteFooter() {
             <h3>We&apos;re a message away.</h3>
           </div>
           <div className="footer-quick">
-            <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer">
+            <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" data-umami-event="WhatsApp click" data-umami-event-location="footer">
               <WhatsAppIcon /> WhatsApp
             </a>
             <a href={`tel:${CONTACT.phone}`}>
@@ -41,7 +41,7 @@ export default function SiteFooter() {
               <a href={SOCIAL.instagram} target="_blank" rel="noopener noreferrer" aria-label="Novaren on Instagram">
                 <InstagramIcon />
               </a>
-              <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" aria-label="Novaren on WhatsApp">
+              <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" data-umami-event="WhatsApp click" data-umami-event-location="footer icon" aria-label="Novaren on WhatsApp">
                 <WhatsAppIcon />
               </a>
               <a href={`mailto:${EMAIL}`} aria-label="Email Novaren">

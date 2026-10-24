@@ -3,6 +3,7 @@ import Link from "next/link";
 import { confirmBooking } from "@/lib/bookings";
 import { formatDate, formatNaira } from "@/lib/dates";
 import { CONTACT } from "@/lib/seo";
+import TrackEvent from "../../_components/TrackEvent";
 
 export const metadata: Metadata = {
   title: "Booking confirmation",
@@ -24,7 +25,7 @@ export default async function ConfirmationPage({ searchParams }: Props) {
         <h1>We couldn&apos;t find that booking.</h1>
         <p>If you were charged, don&apos;t worry: message us with your payment receipt and we&apos;ll sort it out.</p>
         <div className="actions">
-          <a className="btn" href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer">
+          <a className="btn" href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" data-umami-event="WhatsApp click" data-umami-event-location="booking confirmation">
             Message us on WhatsApp
           </a>
           <Link className="btn light" href="/stays">
@@ -78,6 +79,11 @@ export default async function ConfirmationPage({ searchParams }: Props) {
   if (booking.status === "confirmed") {
     return (
       <section className="confirm container">
+        <TrackEvent
+          name="Booking confirmed"
+          data={{ apartment: booking.apartmentName, nights: booking.nights, total: booking.total }}
+          onceKey={`nv-booked-${booking.reference}`}
+        />
         <div className="confirm-badge" aria-hidden="true">
           ✓
         </div>
@@ -89,7 +95,7 @@ export default async function ConfirmationPage({ searchParams }: Props) {
         </p>
         {details}
         <div className="actions">
-          <a className="btn" href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer">
+          <a className="btn" href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" data-umami-event="WhatsApp click" data-umami-event-location="booking confirmation">
             Questions? WhatsApp us
           </a>
           <Link className="btn light" href="/">
@@ -111,7 +117,7 @@ export default async function ConfirmationPage({ searchParams }: Props) {
         </p>
         {details}
         <div className="actions">
-          <a className="btn" href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer">
+          <a className="btn" href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" data-umami-event="WhatsApp click" data-umami-event-location="booking confirmation">
             WhatsApp us now
           </a>
         </div>
@@ -134,7 +140,7 @@ export default async function ConfirmationPage({ searchParams }: Props) {
         <Link className="btn" href={`/stays/${booking.apartmentSlug}`}>
           {failed ? "Try again" : "Back to the apartment"}
         </Link>
-        <a className="btn light" href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer">
+        <a className="btn light" href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" data-umami-event="WhatsApp click" data-umami-event-location="booking confirmation">
           Need help? WhatsApp us
         </a>
       </div>
