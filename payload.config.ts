@@ -17,7 +17,8 @@ import { Rates } from './collections/Rates';
 import { Packages } from './collections/Packages';
 import { Vehicles } from './collections/Vehicles';
 import { Services } from './collections/Services';
-import { Principles } from './collections/Principles';
+import { HomepageHero } from './globals/HomepageHero';
+import { AboutPage } from './globals/AboutPage';
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -29,7 +30,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, JournalPosts, Events, Rates, Packages, Vehicles, Services, Principles, Inquiries],
+  collections: [Users, Media, JournalPosts, Events, Rates, Packages, Vehicles, Services, Inquiries],
+  globals: [HomepageHero, AboutPage],
   editor: lexicalEditor(),
   sharp,
   plugins: [

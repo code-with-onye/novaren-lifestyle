@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { FadeIn } from "@/components/FadeIn";
 import ConciergeForm from "./_components/ConciergeForm";
 import EnquireButton from "./_components/EnquireButton";
@@ -11,6 +12,8 @@ import { getRates, type Rate } from "@/lib/rates";
 import { getPackages, type StayPackage } from "@/lib/packages";
 import { getVehicles, type Vehicle } from "@/lib/vehicles";
 import { getServiceCards, type ServiceCard } from "@/lib/services";
+import { getHero, type Hero } from "@/lib/hero";
+import type { CmsButton } from "@/lib/cms-fields";
 
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
@@ -34,6 +37,39 @@ const IMG = {
   suv: "photo-1519641471654-76ce0107ad1b",
   bus: "photo-1549317661-bd32c8ce0db2",
 };
+
+// Used for any hero field left empty in the CMS (Admin → Globals → Homepage hero).
+const FALLBACK_HERO: Hero = {
+  eyebrow: "A more considered way to experience Abuja",
+  headlineLines: ["Your time.", "Your comfort."],
+  headlineAccent: "Beautifully arranged.",
+  intro:
+    "From a welcoming place to stay to the car that meets you and the experiences that make a trip memorable, Novaren brings the details together.",
+  primaryButton: { label: "Explore our services", href: "/#services", external: false },
+  secondaryButton: { label: "Request a concierge", href: "/#concierge", external: false },
+  imageUrl: img(IMG.living, 1500),
+  imageAlt: "Warm, light-filled living room",
+  noteTitle: "Abuja, made easier.",
+  noteText: "Stays · Fleets · Access · Moments",
+  highlights: [
+    "Considered recommendations",
+    "One point of contact",
+    "Personalised arrangements",
+    "Abuja insight",
+  ],
+};
+
+function CmsLink({ button, className }: { button: CmsButton; className: string }) {
+  return (
+    <Link
+      className={className}
+      href={button.href}
+      {...(button.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+    >
+      {button.label}
+    </Link>
+  );
+}
 
 // Shown until service cards are added in the CMS (Admin → Service cards).
 const FALLBACK_SERVICES = [
@@ -82,12 +118,13 @@ const PACKAGE_TYPE: RequestType = "Stay package";
 const FLEET_TYPE: RequestType = "Transportation";
 
 export default async function LifestylePage() {
-  const [events, cmsRates, cmsPackages, cmsVehicles, cmsServices] = await Promise.all([
+  const [events, cmsRates, cmsPackages, cmsVehicles, cmsServices, hero] = await Promise.all([
     getUpcomingEvents(),
     getRates(),
     getPackages(),
     getVehicles(),
     getServiceCards(),
+    getHero(FALLBACK_HERO),
   ]);
   const services: ServiceCard[] = cmsServices.length
     ? cmsServices
@@ -141,48 +178,42 @@ export default async function LifestylePage() {
       <section className="hero">
         <div className="hero-copy">
           <FadeIn>
-            <div className="eyebrow">A more considered way to experience Abuja</div>
+            <div className="eyebrow">{hero.eyebrow}</div>
             <h1>
-              Your time.
-              <br />
-              Your comfort.
-              <br />
-              <em>Beautifully arranged.</em>
+              {hero.headlineLines.map((line) => (
+                <span key={line}>
+                  {line}
+                  <br />
+                </span>
+              ))}
+              <em>{hero.headlineAccent}</em>
             </h1>
-            <p>
-              From a welcoming place to stay to the car that meets you and the experiences that
-              make a trip memorable, Novaren brings the details together.
-            </p>
+            <p>{hero.intro}</p>
             <div className="actions">
-              <a className="btn" href="#services">
-                Explore our services
-              </a>
-              <a className="btn light" href="#concierge">
-                Request a concierge
-              </a>
+              <CmsLink className="btn" button={hero.primaryButton} />
+              <CmsLink className="btn light" button={hero.secondaryButton} />
             </div>
           </FadeIn>
         </div>
         <div className="hero-image">
           <Image
-            src={img(IMG.living, 1500)}
-            alt="Warm, light-filled living room"
+            src={hero.imageUrl}
+            alt={hero.imageAlt}
             fill
             priority
             sizes="(max-width: 700px) 100vw, 52vw"
           />
           <div className="image-note">
-            <strong>Abuja, made easier.</strong>
-            Stays · Fleets · Access · Moments
+            <strong>{hero.noteTitle}</strong>
+            {hero.noteText}
           </div>
         </div>
       </section>
 
       <div className="truststrip">
-        <span>Considered recommendations</span>
-        <span>One point of contact</span>
-        <span>Personalised arrangements</span>
-        <span>Abuja insight</span>
+        {hero.highlights.map((h) => (
+          <span key={h}>{h}</span>
+        ))}
       </div>
 
       {/* Services */}
