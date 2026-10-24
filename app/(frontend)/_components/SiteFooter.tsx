@@ -53,7 +53,7 @@ export default function SiteFooter() {
           <div>
             <h4>Explore</h4>
             <div className="footer-links">
-              <Link href="/#pricing">Stays</Link>
+              <Link href="/stays">Stays</Link>
               <Link href="/#packages">Stay packages</Link>
               <Link href="/#wheels">Fleets</Link>
               <Link href="/#events">Events</Link>

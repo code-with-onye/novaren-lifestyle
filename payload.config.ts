@@ -17,6 +17,8 @@ import { Rates } from './collections/Rates';
 import { Packages } from './collections/Packages';
 import { Vehicles } from './collections/Vehicles';
 import { Services } from './collections/Services';
+import { Apartments } from './collections/Apartments';
+import { Bookings } from './collections/Bookings';
 import { HomepageHero } from './globals/HomepageHero';
 import { AboutPage } from './globals/AboutPage';
 
@@ -30,7 +32,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, JournalPosts, Events, Rates, Packages, Vehicles, Services, Inquiries],
+  collections: [Users, Media, JournalPosts, Events, Rates, Packages, Vehicles, Services, Apartments, Bookings, Inquiries],
   globals: [HomepageHero, AboutPage],
   editor: lexicalEditor(),
   sharp,

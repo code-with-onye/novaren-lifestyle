@@ -1,10 +1,12 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
 import { getJournalPosts } from "@/lib/journal";
+import { getPublishedApartments } from "@/lib/bookings";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     { path: "/", priority: 1, changeFrequency: "weekly" },
+    { path: "/stays", priority: 0.9, changeFrequency: "daily" },
     { path: "/about", priority: 0.8, changeFrequency: "monthly" },
     { path: "/journal", priority: 0.7, changeFrequency: "weekly" },
   ].map((r) => ({
@@ -28,5 +30,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     journalRoutes = [];
   }
 
-  return [...staticRoutes, ...journalRoutes];
+  // getPublishedApartments already returns [] if the CMS is unreachable.
+  const stayRoutes: MetadataRoute.Sitemap = (await getPublishedApartments()).map((a) => ({
+    url: `${SITE_URL}/stays/${a.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "weekly",
+    priority: 0.8,
+  }));
+
+  return [...staticRoutes, ...stayRoutes, ...journalRoutes];
 }

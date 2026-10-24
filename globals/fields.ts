@@ -8,6 +8,7 @@ export const LINK_OPTIONS = [
   { label: 'Homepage: Fleets', value: '/#wheels' },
   { label: 'Homepage: Events', value: '/#events' },
   { label: 'Homepage: Concierge form', value: '/#concierge' },
+  { label: 'Shortlet stays (book online)', value: '/stays' },
   { label: 'Editorial', value: '/journal' },
   { label: 'About', value: '/about' },
   { label: 'Custom URL', value: 'custom' },

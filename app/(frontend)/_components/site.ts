@@ -3,7 +3,7 @@ import { CONTACT, SOCIAL } from "@/lib/seo";
 // Kept short on purpose; "Enquire" is the header button. Section links are
 // absolute ("/#…") so they work from other pages too.
 export const NAV_LINKS = [
-  { href: "/#pricing", label: "Stays" },
+  { href: "/stays", label: "Stays" },
   { href: "/#wheels", label: "Fleets" },
   { href: "/#events", label: "Events" },
   { href: "/journal", label: "Editorial" },
@@ -11,7 +11,7 @@ export const NAV_LINKS = [
 ] as const;
 
 // Top-level pages whose nav link stays highlighted on them and their subpages.
-const PAGE_LINKS = ["/journal", "/about"];
+const PAGE_LINKS = ["/stays", "/journal", "/about"];
 
 export function activePageLink(pathname: string): string | null {
   return PAGE_LINKS.find((p) => pathname === p || pathname.startsWith(`${p}/`)) ?? null;

@@ -68,6 +68,7 @@ export const Services: CollectionConfig = {
           defaultValue: '#concierge',
           options: [
             { label: 'Indicative rates', value: '#pricing' },
+            { label: 'Shortlet stays (book online)', value: '/stays' },
             { label: 'Stay packages', value: '#packages' },
             { label: 'Fleets', value: '#wheels' },
             { label: 'Events', value: '#events' },
