@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { headers } from "next/headers";
 import { notFound } from "next/navigation";
 import { getPayload } from "payload";
@@ -11,6 +10,7 @@ import { getApartmentBySlug, getUnavailableNights } from "@/lib/bookings";
 import { todayInAbuja } from "@/lib/dates";
 import BookingWidget from "../_components/BookingWidget";
 import BookingPanel from "../_components/BookingPanel";
+import StayGallery from "../_components/StayGallery";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -45,8 +45,6 @@ export default async function StayPage({ params }: Props) {
   const apartment = await getApartmentBySlug(slug, admin);
   if (!apartment) notFound();
   const unavailable = await getUnavailableNights(apartment.id);
-  const [cover, ...rest] = apartment.photos;
-  const thumbs = rest.slice(0, 4);
 
   return (
     <>
@@ -78,18 +76,7 @@ export default async function StayPage({ params }: Props) {
         <h1>{apartment.name}</h1>
       </section>
 
-      {cover && (
-        <section className="stay-gallery container" data-count={thumbs.length}>
-          <div className="stay-gallery-main">
-            <Image src={cover.url} alt={cover.alt} fill priority sizes="(max-width: 700px) 100vw, 60vw" />
-          </div>
-          {thumbs.map((p, i) => (
-            <div key={p.url + i} className="stay-gallery-thumb">
-              <Image src={p.url} alt={p.alt} fill sizes="(max-width: 700px) 50vw, 20vw" />
-            </div>
-          ))}
-        </section>
-      )}
+      <StayGallery photos={apartment.photos} />
 
       <section className="stay-body container">
         <div className="stay-info">
