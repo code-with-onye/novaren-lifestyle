@@ -371,6 +371,31 @@ body.nv.nv-locked {
   transition: transform 0.45s var(--ease), visibility 0s linear 0.45s;
   overflow-y: auto;
 }
+.drawer-close {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+.drawer-close:hover {
+  background: #fff;
+  border-color: #fff;
+  color: var(--green);
+}
+.drawer-close svg {
+  width: 18px;
+  height: 18px;
+}
 .drawer.open {
   transform: translateX(0);
   visibility: visible;
