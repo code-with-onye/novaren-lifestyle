@@ -2766,10 +2766,59 @@ body.nv.nv-locked {
 .cal {
   position: relative;
 }
+.cal-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 1px solid var(--line);
+  margin-bottom: 18px;
+}
+.cal-field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  padding: 10px 14px;
+  border: 0;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+  box-shadow: inset 0 -2px 0 transparent;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+.cal-field + .cal-field {
+  border-left: 1px solid var(--line);
+}
+.cal-field span {
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.cal-field strong {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.cal-field.is-active {
+  background: #fbfaf5;
+  box-shadow: inset 0 -2px 0 var(--green);
+}
+.cal-field:disabled {
+  cursor: default;
+}
+.cal-field:disabled strong {
+  color: #b9beb9;
+}
+.cal-head {
+  position: relative;
+  height: 0;
+}
 .cal-nav {
   position: absolute;
-  top: -4px;
+  top: -2px;
   right: 0;
+  z-index: 1;
   display: flex;
   gap: 6px;
 }
@@ -2834,15 +2883,52 @@ body.nv.nv-locked {
 .cal-day.in-range {
   background: #e9efe9;
 }
+.cal-day.in-range.preview {
+  background: #f1f4ef;
+}
+.cal-day.is-end.preview {
+  background: #fff;
+  color: var(--green);
+  box-shadow: inset 0 0 0 1.5px var(--green);
+}
+/* Too short to be a check-out: still tappable, so we can explain the minimum stay. */
+.cal-day.is-short {
+  color: #b5bab5;
+  cursor: help;
+}
+.cal-day.is-short:hover {
+  background: none;
+}
 .cal-day.is-start,
 .cal-day.is-end {
   background: var(--green);
   color: #fff;
 }
+.cal-foot {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 10px;
+}
 .cal-hint {
   font-size: 11.5px;
   color: var(--muted);
-  margin: 10px 0 0;
+  margin: 0;
+}
+.cal-hint.is-notice {
+  color: #8a5a12;
+}
+.cal-clear {
+  flex-shrink: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-size: 11px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  color: var(--green);
 }
 
 .confirm {
