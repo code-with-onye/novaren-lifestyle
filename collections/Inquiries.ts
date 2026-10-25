@@ -6,6 +6,21 @@ export const Inquiries: CollectionConfig = {
     useAsTitle: 'email',
     defaultColumns: ['firstName', 'lastName', 'email', 'inquiryType', 'status', 'createdAt'],
   },
+  hooks: {
+    afterChange: [
+      async ({ doc, operation }) => {
+        if (operation !== 'create') return;
+        // Email the person and the team. Never let an email problem fail the submission:
+        // the enquiry is already saved and visible in the admin panel.
+        try {
+          const { sendInquiryEmails } = await import('../lib/inquiry-emails');
+          await sendInquiryEmails(doc);
+        } catch (error) {
+          console.error('[inquiries] Could not send enquiry emails', error);
+        }
+      },
+    ],
+  },
   access: {
     create: () => true,
     read: ({ req: { user } }) => Boolean(user),

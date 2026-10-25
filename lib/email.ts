@@ -5,13 +5,13 @@ import { CONTACT, SITE_NAME } from './seo';
 // The sender must be on a domain verified in Resend; until then Resend only
 // delivers from onboarding@resend.dev to the account owner's own address.
 
-const FALLBACK_NOTIFY = 'novarenlifestyle@yahoo.com';
+const FALLBACK_NOTIFY = 'hello@novarenlifestyle.cc';
 
 export const emailConfigured = () => Boolean(process.env.RESEND_API_KEY && process.env.BOOKINGS_EMAIL_FROM);
 
 export const bookingsNotifyAddress = () => process.env.BOOKINGS_NOTIFY_EMAIL || FALLBACK_NOTIFY;
 
-export async function sendEmail(input: { to: string; subject: string; html: string; replyTo?: string }) {
+export async function sendEmail(input: { to: string | string[]; subject: string; html: string; replyTo?: string }) {
   if (!emailConfigured()) {
     console.warn(`[email] Skipped "${input.subject}": RESEND_API_KEY or BOOKINGS_EMAIL_FROM is not set.`);
     return false;
@@ -21,7 +21,7 @@ export async function sendEmail(input: { to: string; subject: string; html: stri
     headers: { Authorization: `Bearer ${process.env.RESEND_API_KEY}`, 'Content-Type': 'application/json' },
     body: JSON.stringify({
       from: process.env.BOOKINGS_EMAIL_FROM,
-      to: [input.to],
+      to: Array.isArray(input.to) ? input.to : [input.to],
       subject: input.subject,
       html: input.html,
       ...(input.replyTo ? { reply_to: input.replyTo } : {}),
