@@ -4,6 +4,8 @@ import JsonLd from "@/components/JsonLd";
 import { breadcrumbJsonLd } from "@/lib/seo";
 import { getPublishedApartments } from "@/lib/bookings";
 import StaysBrowser, { type StayCard } from "./_components/StaysBrowser";
+import StaysComingSoon from "./_components/StaysComingSoon";
+import { staysEnabled } from "@/lib/features";
 
 const description =
   "Book a Novaren shortlet apartment in Abuja online. See availability, choose your dates and pay securely with Paystack.";
@@ -17,9 +19,12 @@ export const metadata: Metadata = {
   alternates: { canonical: "/stays" },
   openGraph: { title: "Shortlet stays in Abuja", description, url: "/stays", type: "website" },
   twitter: { title: "Shortlet stays in Abuja", description },
+  // Keep the placeholder out of search results while booking is switched off.
+  ...(staysEnabled() ? {} : { robots: { index: false, follow: true } }),
 };
 
 export default async function StaysPage() {
+  if (!staysEnabled()) return <StaysComingSoon />;
   const apartments = await getPublishedApartments();
   const stays: StayCard[] = apartments.map((a) => ({
     id: a.id,

@@ -3,7 +3,7 @@ import Image from "next/image";
 import { InstagramIcon, MailIcon, PhoneIcon, WhatsAppIcon } from "./icons";
 import { CONTACT, EMAIL, SOCIAL } from "./site";
 
-export default function SiteFooter() {
+export default function SiteFooter({ staysEnabled }: { staysEnabled: boolean }) {
   return (
     <footer className="footer">
       <div className="container">
@@ -53,7 +53,7 @@ export default function SiteFooter() {
           <div>
             <h4>Explore</h4>
             <div className="footer-links">
-              <Link href="/stays">Stays</Link>
+              <Link href={staysEnabled ? "/stays" : "/#pricing"}>Stays</Link>
               <Link href="/#packages">Stay packages</Link>
               <Link href="/#wheels">Fleets</Link>
               <Link href="/#events">Events</Link>

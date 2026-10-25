@@ -6,7 +6,9 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { CONTACT, EMAIL, NAV_LINKS, activePageLink } from "./site";
 
-export default function SiteNav() {
+export default function SiteNav({ staysEnabled }: { staysEnabled: boolean }) {
+  // While online booking is off, "Stays" points at the homepage rates instead.
+  const links = NAV_LINKS.map((l) => (l.href === "/stays" && !staysEnabled ? { ...l, href: "/#pricing" } : l));
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string | null>(null);
@@ -36,7 +38,7 @@ export default function SiteNav() {
   // On the homepage, highlight the link for the section currently in view.
   useEffect(() => {
     if (!isHome) return;
-    const sections = NAV_LINKS.filter((l) => l.href.startsWith("/#"))
+    const sections = links.filter((l) => l.href.startsWith("/#"))
       .map((l) => document.getElementById(l.href.slice(2)))
       .filter((el): el is HTMLElement => el !== null);
     const observer = new IntersectionObserver(
@@ -52,7 +54,7 @@ export default function SiteNav() {
       observer.disconnect();
       setActiveSection(null);
     };
-  }, [isHome]);
+  }, [isHome]); // eslint-disable-line react-hooks/exhaustive-deps -- links only change on redeploy
 
   // Lock scroll, close on Escape and move focus while the drawer is open.
   useEffect(() => {
@@ -96,7 +98,7 @@ export default function SiteNav() {
           </Link>
 
           <nav className="navlinks" aria-label="Primary">
-            {NAV_LINKS.map((l) => (
+            {links.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
@@ -145,7 +147,7 @@ export default function SiteNav() {
           </svg>
         </button>
         <nav aria-label="Mobile">
-          {NAV_LINKS.map((l, i) => (
+          {links.map((l, i) => (
             <Link
               key={l.href}
               href={l.href}

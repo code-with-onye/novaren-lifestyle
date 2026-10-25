@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/seo";
 import { getJournalPosts } from "@/lib/journal";
 import { getPublishedApartments } from "@/lib/bookings";
+import { staysEnabled } from "@/lib/features";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -30,13 +31,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     journalRoutes = [];
   }
 
+  // Stays pages are only listed once online booking is switched on.
   // getPublishedApartments already returns [] if the CMS is unreachable.
-  const stayRoutes: MetadataRoute.Sitemap = (await getPublishedApartments()).map((a) => ({
+  const stays = staysEnabled() ? await getPublishedApartments() : [];
+  const stayRoutes: MetadataRoute.Sitemap = stays.map((a) => ({
     url: `${SITE_URL}/stays/${a.slug}`,
     lastModified: new Date(),
     changeFrequency: "weekly",
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...stayRoutes, ...journalRoutes];
+  const visibleStatic = staysEnabled() ? staticRoutes : staticRoutes.filter((r) => !r.url.endsWith("/stays"));
+  return [...visibleStatic, ...stayRoutes, ...journalRoutes];
 }

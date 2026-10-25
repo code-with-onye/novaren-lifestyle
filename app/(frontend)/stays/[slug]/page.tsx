@@ -11,6 +11,8 @@ import { todayInAbuja } from "@/lib/dates";
 import BookingWidget from "../_components/BookingWidget";
 import BookingPanel from "../_components/BookingPanel";
 import StayGallery from "../_components/StayGallery";
+import StaysComingSoon from "../_components/StaysComingSoon";
+import { staysEnabled } from "@/lib/features";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -21,6 +23,7 @@ async function isAdmin() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  if (!staysEnabled()) return { title: "Shortlet stays", robots: { index: false, follow: true } };
   const { slug } = await params;
   const apartment = await getApartmentBySlug(slug, false);
   if (!apartment) return { title: "Stay", robots: { index: false } };
@@ -42,6 +45,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function StayPage({ params }: Props) {
   const { slug } = await params;
   const admin = await isAdmin();
+  // While online booking is off, only logged-in admins can see (and test) listings.
+  if (!staysEnabled() && !admin) return <StaysComingSoon />;
   const apartment = await getApartmentBySlug(slug, admin);
   if (!apartment) notFound();
   const unavailable = await getUnavailableNights(apartment.id);

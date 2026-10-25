@@ -7,6 +7,7 @@ import SiteNav from "./_components/SiteNav";
 import SiteFooter from "./_components/SiteFooter";
 import { WhatsAppIcon } from "./_components/icons";
 import { CONTACT } from "./_components/site";
+import { staysEnabled } from "@/lib/features";
 import {
   SITE_URL,
   SITE_NAME,
@@ -97,9 +98,9 @@ export default function SiteRootLayout({
         <a className="skip-link" href="#main">
           Skip to content
         </a>
-        <SiteNav />
+        <SiteNav staysEnabled={staysEnabled()} />
         <main id="main">{children}</main>
-        <SiteFooter />
+        <SiteFooter staysEnabled={staysEnabled()} />
         <a
           className="wa-float"
           href={CONTACT.whatsapp}
