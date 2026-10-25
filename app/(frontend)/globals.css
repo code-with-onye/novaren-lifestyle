@@ -915,6 +915,111 @@ body.nv.nv-locked {
 .event-photo .image-note {
   max-width: calc(100% - 56px);
 }
+
+/* Event image slideshow: each slide enters from the right and leaves to the left. */
+.slideshow {
+  background: #12241d;
+}
+.slideshow .slide {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  transform: translateX(100%);
+  visibility: hidden;
+}
+.slideshow .slide.is-active,
+.slideshow .slide.is-prev {
+  visibility: visible;
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1);
+}
+.slideshow .slide.is-active {
+  transform: none;
+  z-index: 1;
+}
+.slideshow .slide.is-prev {
+  transform: translateX(-100%);
+}
+/* Gentle settle-in zoom on the showing image. */
+.slideshow .slide.is-active img {
+  animation: slide-zoom 6s ease-out both;
+}
+@keyframes slide-zoom {
+  from {
+    transform: scale(1.08);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+.slideshow .image-note {
+  transition: opacity 0.5s 0.4s, transform 0.5s 0.4s var(--ease);
+}
+.slideshow .slide:not(.is-active) .image-note {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: none;
+}
+.slide-dots {
+  position: absolute;
+  z-index: 2;
+  right: 18px;
+  bottom: 18px;
+  display: flex;
+  gap: 6px;
+}
+.slide-dots button {
+  position: relative;
+  width: 22px;
+  height: 4px;
+  padding: 0;
+  border: 0;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  overflow: hidden;
+  transition: width 0.4s var(--ease), background 0.2s;
+}
+/* Bigger tap target without changing the look. */
+.slide-dots button::before {
+  content: "";
+  position: absolute;
+  inset: -10px -3px;
+}
+.slide-dots button:hover {
+  background: rgba(255, 255, 255, 0.75);
+}
+.slide-dots button.is-active {
+  width: 44px;
+  background: rgba(255, 255, 255, 0.4);
+}
+.slide-progress {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform-origin: left;
+  animation-name: slide-progress;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+@keyframes slide-progress {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+/* The event currently in the showcase. */
+.event-item {
+  transition: background 0.3s;
+}
+.event-item.is-showing .datebox {
+  border-color: var(--gold);
+  box-shadow: inset 0 -2px 0 var(--gold);
+}
+.event-item.is-showing h4 {
+  color: var(--green);
+}
 .event-info {
   flex: 1;
   min-width: 0;

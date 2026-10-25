@@ -2,6 +2,7 @@ import Image from "next/image";
 import { FadeIn } from "@/components/FadeIn";
 import type { UpcomingEvent } from "@/lib/events";
 import EnquireButton from "./EnquireButton";
+import EventSlideshow from "./EventSlideshow";
 
 const FALLBACK_PHOTO =
   "https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=1200&q=85";
@@ -28,7 +29,7 @@ function EventRow({ event }: { event: UpcomingEvent }) {
   const when = `${weekday.format(start)} · ${time.format(start).toLowerCase()}`;
 
   return (
-    <li className="event-item">
+    <li className="event-item" data-event-id={event.id}>
       <time className="datebox" dateTime={event.startsAt}>
         <b>{day.format(start)}</b>
         <small>{month.format(start).toUpperCase()}</small>
@@ -59,27 +60,21 @@ function EventRow({ event }: { event: UpcomingEvent }) {
 }
 
 export default function EventsSection({ events }: { events: UpcomingEvent[] }) {
-  const featured = events.find((e) => e.imageUrl);
-  const photo = featured?.imageUrl || FALLBACK_PHOTO;
+  const slides = events
+    .filter((e) => e.imageUrl)
+    .map((e) => ({ id: e.id, title: e.title, venue: e.venue, imageUrl: e.imageUrl }));
 
   return (
     <section className="section events" id="events">
       <div className="container event-layout">
         <FadeIn>
-          <div className="event-photo">
-            <Image
-              src={photo}
-              alt={featured ? featured.title : "Elegant event venue"}
-              fill
-              sizes="(max-width: 700px) 100vw, 52vw"
-            />
-            {featured && (
-              <div className="image-note">
-                <strong>{featured.title}</strong>
-                {featured.venue}
-              </div>
-            )}
-          </div>
+          {slides.length > 0 ? (
+            <EventSlideshow slides={slides} />
+          ) : (
+            <div className="event-photo">
+              <Image src={FALLBACK_PHOTO} alt="Elegant event venue" fill sizes="(max-width: 700px) 100vw, 52vw" />
+            </div>
+          )}
         </FadeIn>
         <FadeIn delay={0.1} className="event-content">
           <div className="eyebrow">The city, on your calendar</div>
